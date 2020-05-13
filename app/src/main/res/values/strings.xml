@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">MyMess</string>
+    <string-array name="days">
+        <item>DAY</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="meals">
+        <item>MEAL</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
+</resources>

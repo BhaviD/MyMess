@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectPreferences">
+
+    <CheckBox
+        android:id="@+id/checkBoxSpicy"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/headingLabel2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="40dp"
+        android:text="Spicy"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/headingLabel3"
+        tools:layout_editor_absoluteX="96dp" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFried"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkBoxFibrous"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="13dp"
+        android:text="Fried"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox2"
+        tools:layout_editor_absoluteX="95dp" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFibrous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkBoxHealthy"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="20dp"
+        android:text="Fibrous"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox5"
+        tools:layout_editor_absoluteX="96dp" />
+
+    <CheckBox
+        android:id="@+id/checkBoxHealthy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkBoxSpicy"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="71dp"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="15dp"
+        android:text="Healthy"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox7"
+        tools:layout_editor_absoluteX="95dp" />
+
+    <TextView
+        android:id="@+id/headingLabel3"
+        android:layout_width="378dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        android:text="Select your preferences:"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headingLabel2" />
+
+    <TextView
+        android:id="@+id/headingLabel2"
+        android:layout_width="335dp"
+        android:layout_height="53dp"
+        android:layout_below="@+id/headingLabel"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:text="Monday | Breakfast"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headingLabel" />
+
+    <Button
+        android:id="@+id/foodPreferencesButton"
+        android:layout_width="393dp"
+        android:layout_height="75dp"
+        android:layout_below="@+id/checkBoxFried"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="88dp"
+        android:text="Show Mess Choices"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox6"
+        tools:layout_editor_absoluteX="90dp" />
+
+</RelativeLayout>
