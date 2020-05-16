@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DayMeal"></activity>
-        <activity android:name=".ShowPreferences"></activity>
-        <activity android:name=".SelectPreferences"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".DayMeal" />
+        <activity android:name=".ShowPreferences" />
+        <activity android:name=".SelectPreferences" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

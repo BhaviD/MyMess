@@ -1,6 +1,7 @@
 package com.example.mymess;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-public class DayMeal extends AppCompatActivity {
+public class DayMeal extends OptionsMenuActivity {
+    private Toolbar mtoolbar;
 
     Button btn;
     String day_val, meal_val;
@@ -24,6 +27,9 @@ public class DayMeal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_meal);
+
+        mtoolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mtoolbar);
 
         heading = (TextView) findViewById(R.id.headingLabel);
         heading.setText("Hello " + getIntent().getStringExtra("NAME"));

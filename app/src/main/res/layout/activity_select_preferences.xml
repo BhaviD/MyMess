@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".SelectPreferences">
 
+    <include layout="@layout/toolbar_layout"/>
+
     <CheckBox
         android:id="@+id/checkBoxSpicy"
         android:layout_width="100dp"
@@ -85,13 +87,13 @@
         android:id="@+id/headingLabel2"
         android:layout_width="335dp"
         android:layout_height="53dp"
-        android:layout_below="@+id/headingLabel"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginRight="31dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         android:text="Monday | Breakfast"
         android:textSize="36sp"
         android:textStyle="bold"

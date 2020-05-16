@@ -1,6 +1,7 @@
 package com.example.mymess;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class SelectPreferences extends AppCompatActivity {
+public class SelectPreferences extends OptionsMenuActivity {
+    private Toolbar mtoolbar;
 
     TextView heading, heading_label;
     Button btn;
@@ -17,6 +19,9 @@ public class SelectPreferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_preferences);
+
+        mtoolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mtoolbar);
 
         heading_label = (TextView) findViewById(R.id.headingLabel2);
         heading_label.setText(getIntent().getStringExtra("DAY") + " | " + getIntent().getStringExtra("MEAL"));
