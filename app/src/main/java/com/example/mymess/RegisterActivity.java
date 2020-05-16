@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "SignUp Unsuccessful, Please Try Again", Toast.LENGTH_SHORT).show();
                             } else {
                                 addUser(f_name, l_name, email);
-                                startActivity(new Intent(RegisterActivity.this, DayMeal.class));
+                                startActivity(new Intent(RegisterActivity.this, DayDateActivity.class));
                             }
                         }
                     });

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyMess</string>
     <string name="logout">logout</string>
+
     <string-array name="days">
         <item>DAY</item>
         <item>Monday</item>
