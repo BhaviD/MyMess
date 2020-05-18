@@ -19,7 +19,7 @@ public class DayDateActivity extends OptionsMenuActivity {
 
     Button mSelect_meal_btn;
     String msDay;
-    Integer mYear = 0, mMonth = 0, mDay = 0;
+    Integer mnYear = 0, mnMonth = 0, mnDay = 0;
     CalendarView mCalenderView;
 
     @Override
@@ -55,9 +55,9 @@ public class DayDateActivity extends OptionsMenuActivity {
         mCalenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                mYear = year;
-                mMonth = month+1;   // since months start from 0 in android
-                mDay = dayOfMonth;
+                mnYear = year;
+                mnMonth = month+1;   // since months start from 0 in android
+                mnDay = dayOfMonth;
             }
         });
 
@@ -65,15 +65,15 @@ public class DayDateActivity extends OptionsMenuActivity {
         mSelect_meal_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DayDateActivity.this, SelectPreferences.class);
+                Intent intent = new Intent(DayDateActivity.this, SelectMealActivity.class);
                 if (!msDay.equals("DAY")) {
-                    intent.putExtra("sDAY", msDay);
+                    intent.putExtra("sDay", msDay);
                     startActivity(intent);
                 }
-                else if (mYear != 0) {
-                    intent.putExtra("YEAR", mYear);
-                    intent.putExtra("MONTH", mMonth);
-                    intent.putExtra("nDAY", mDay);
+                else if (mnYear != 0) {
+                    intent.putExtra("nYear", mnYear);
+                    intent.putExtra("nMonth", mnMonth);
+                    intent.putExtra("nDay", mnDay);
                     startActivity(intent);
                 }
                 else
