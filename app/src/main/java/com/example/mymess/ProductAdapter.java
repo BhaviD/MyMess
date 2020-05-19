@@ -83,6 +83,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     RadioButton checkedRadioButton = (RadioButton) itemView.findViewById(checkedId);
                     String registered_mess = checkedRadioButton.getText().toString();
+                    if (registered_mess.equals("Cancel"))
+                        registered_mess = "Cancelled";
 
                     for (Product product: productList) {
                         if (product.getMeal() == meal.getText())

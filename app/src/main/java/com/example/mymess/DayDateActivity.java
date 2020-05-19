@@ -18,6 +18,7 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class DayDateActivity extends OptionsMenuActivity {
     Button mSelect_meal_btn;
     String msDay = null;
     String msDate = null;
+    String msMonthYear = null;
     CalendarView mCalenderView;
 
     @Override
@@ -54,12 +56,14 @@ public class DayDateActivity extends OptionsMenuActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 msDay = days.getSelectedItem().toString();
-//                msDate = null;
-//                mCalenderView.setDate(Calendar.getInstance().getTimeInMillis());
                 if (!msDay.equals("DAY")) {
-//                    Toast.makeText(DayDateActivity.this, msDay + " Selected", Toast.LENGTH_LONG).show();
+                    Calendar date = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MMM_y");
+                    String sMonthYear = dateFormat.format(date.getTimeInMillis());
+
                     Intent intent = new Intent(DayDateActivity.this, SelectMealActivity.class);
                     intent.putExtra("sDay", msDay);
+                    intent.putExtra("sMonthYear", sMonthYear);
                     startActivity(intent);
                 }
             }
@@ -88,39 +92,26 @@ public class DayDateActivity extends OptionsMenuActivity {
                         days.setEnabled(true);
                     } else {
                         days.setEnabled(false);
+                        Calendar date = Calendar.getInstance();
+                        date.set(year, month, dayOfMonth);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM_y");
+                        String sMonthYear = dateFormat.format(date.getTimeInMillis());
+
                         String sDayNum = String.valueOf(dayOfMonth);
                         if (sDayNum.length() < 2)
                             sDayNum = "0" + sDayNum;
                         String sMonth = String.valueOf(month+1);  // months start from 0
                         if (sMonth.length() < 2)
                             sMonth = "0" + sMonth;
-                        msDate =  sDayNum + "/" + sMonth + "/" + year;
-//                        Toast.makeText(DayDateActivity.this, msDate + " Selected", Toast.LENGTH_LONG).show();
-                        msDate = msDate.replace('/', '_');
+                        msDate =  sDayNum + "_" + sMonth + "_" + year;
+
                         Intent intent = new Intent(DayDateActivity.this, SelectMealActivity.class);
                         intent.putExtra("sDate", msDate);
+                        intent.putExtra("sMonthYear", sMonthYear);
                         startActivity(intent);
                     }
                 }
             }
         });
-
-//        mSelect_meal_btn = (Button) findViewById(R.id.select_meal);
-//        mSelect_meal_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(DayDateActivity.this, SelectMealActivity.class);
-//                if (msDay != null && !msDay.equals("DAY")) {
-//                    intent.putExtra("sDay", msDay);
-//                    startActivity(intent);
-//                }
-//                else if (msDate != null) {
-//                    intent.putExtra("sDate", msDate);
-//                    startActivity(intent);
-//                }
-//                else
-//                    Toast.makeText(DayDateActivity.this, "Select Either Day or Date", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 }

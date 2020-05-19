@@ -24,6 +24,11 @@ public class OptionsMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.home:
+                Intent intentToWelcome = new Intent(this, WelcomeActivity.class);
+                startActivity(intentToWelcome);
+                return true;
+
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 Intent intentToMain = new Intent (this, MainActivity.class);
@@ -33,6 +38,11 @@ public class OptionsMenuActivity extends AppCompatActivity {
             case R.id.change_mess_registration:
                 Intent intentToDayDate = new Intent(this, DayDateActivity.class);
                 startActivity(intentToDayDate);
+                return true;
+
+            case R.id.view_mess_registrations:
+                Intent intentToViewRegistration = new Intent(this, ViewRegistrationActivity.class);
+                startActivity(intentToViewRegistration);
                 return true;
 
             default:

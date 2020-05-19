@@ -2,14 +2,23 @@
     <string name="app_name">MyMess</string>
     <string name="logout">Logout</string>
     <string name="meal">Meal</string>
-    <string name="south_mess">South Mess</string>
-    <string name="north_mess">North Mess</string>
+    <string name="south_mess">South</string>
+    <string name="north_mess">North</string>
     <string name="yuktahaar">Yuktahaar</string>
-    <string name="kadamba_veg">Kadamba-Veg</string>
+    <string name="kadamba_veg">Kadamba Veg</string>
     <string name="kadamba_non_veg">Kadamba Non-Veg</string>
     <string name="home_text">Please click at the dots for options</string>
     <string name="change_mess_registration">Change Mess Registration</string>
     <string name="view_mess_registration">View Mess Registration</string>
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thurs">Thurs</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="cancel">Cancel</string>
+    <string name="home">Home</string>
 
     <string-array name="days">
         <item>DAY</item>

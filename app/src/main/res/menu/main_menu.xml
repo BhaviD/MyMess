@@ -4,11 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/home"
+        android:title="@string/home"/>
+
+    <item
         android:id="@+id/change_mess_registration"
         android:title="@string/change_mess_registration"/>
 
     <item
-        android:id="@+id/view_registrations"
+        android:id="@+id/view_mess_registrations"
         android:title="@string/view_mess_registration"/>
 
     <item

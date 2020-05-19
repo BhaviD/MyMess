@@ -1,22 +1,29 @@
 package com.example.mymess;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
 public class WelcomeActivity extends OptionsMenuActivity {
 
@@ -34,12 +41,11 @@ public class WelcomeActivity extends OptionsMenuActivity {
         final TextView lunch_mess = findViewById(R.id.lunch_mess);
         final TextView dinner_mess = findViewById(R.id.dinner_mess);
 
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mCurrentUser = mAuth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Calendar date = Calendar.getInstance();
+        final Calendar date = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMM y");
         current_date.setText(dateFormat.format(date.getTimeInMillis()));
 
@@ -51,17 +57,37 @@ public class WelcomeActivity extends OptionsMenuActivity {
             }
         });
 
+        dateFormat = new SimpleDateFormat("MMM_y");
+        String sMonthYear = dateFormat.format(date.getTimeInMillis());
+
+        dateFormat = new SimpleDateFormat("dd_MM_yyyy");
+        String fetch_date = dateFormat.format(date.getTimeInMillis());
+
         DocumentReference mess_registration = db.collection("users")
                                                 .document(mCurrentUser.getEmail())
                                                 .collection("mess_registrations")
-                                                .document("19_05_2020");
+                                                .document(sMonthYear)
+                                                .collection("registrations_by_date")
+                                                .document(fetch_date);
 
-        mess_registration.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        mess_registration.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                breakfast_mess.setText(documentSnapshot.getString("Breakfast"));
-                lunch_mess.setText(documentSnapshot.getString("Lunch"));
-                dinner_mess.setText(documentSnapshot.getString("Dinner"));
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    String b_mess = documentSnapshot.getString("Breakfast");
+                    String l_mess = documentSnapshot.getString("Lunch");
+                    String d_mess = documentSnapshot.getString("Dinner");
+                    if (b_mess != null)
+                        breakfast_mess.setText(b_mess.substring(0, b_mess.length()-3));
+                    if (l_mess != null)
+                        lunch_mess.setText(l_mess.substring(0, l_mess.length()-3));
+                    if (d_mess != null)
+                        dinner_mess.setText(d_mess.substring(0, d_mess.length()-3));
+
+                    if (b_mess == null || l_mess == null || d_mess == null)
+                        Toast.makeText(WelcomeActivity.this, "Mess Registrations are not done", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

@@ -100,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("first_name", f_name);
         user.put("last_name", l_name);
         user.put("email_id", email_id);
+
         db.collection("users")
             .document(email_id)
             .set(user)

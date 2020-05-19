@@ -18,6 +18,7 @@ public class SelectMealActivity extends OptionsMenuActivity {
     Button food_options_btn;
     String msDay = null;
     String msDate = null;
+    String msMonthYear = null;
     CheckBox breakfast, lunch, dinner, all_meals;
 //    boolean mBreakfastChecked = false, mLunchChecked = false, mDinnerChecked = false, mAllChecked = false;
     TextView skip_food_options;
@@ -32,6 +33,7 @@ public class SelectMealActivity extends OptionsMenuActivity {
 
         msDay = getIntent().getStringExtra("sDay");
         msDate = getIntent().getStringExtra("sDate");
+        msMonthYear = getIntent().getStringExtra("sMonthYear");
         breakfast = (CheckBox) findViewById(R.id.breakfast);
         lunch = (CheckBox) findViewById(R.id.lunch);
         dinner = (CheckBox) findViewById(R.id.dinner);
@@ -76,6 +78,7 @@ public class SelectMealActivity extends OptionsMenuActivity {
             Toast.makeText(SelectMealActivity.this, "Please select a meal", Toast.LENGTH_SHORT).show();
         else {
             Intent intent = new Intent(SelectMealActivity.this, goto_class);
+            intent.putExtra("sMonthYear", msMonthYear);
             if (msDay != null)
                 intent.putExtra("sDay", msDay);
             else if (msDate != null)

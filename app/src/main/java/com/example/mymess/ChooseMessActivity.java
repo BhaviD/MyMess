@@ -57,6 +57,7 @@ public class ChooseMessActivity extends OptionsMenuActivity {
 
     String msDay = null;
     String msDate = null;
+    String msMonthYear = null;
     boolean mBreakfast = false, mLunch = false, mDinner = false, mAllMeals = false;
 
     Button register_mess_btn;
@@ -73,6 +74,7 @@ public class ChooseMessActivity extends OptionsMenuActivity {
 
         msDay = getIntent().getStringExtra("sDay");
         msDate = getIntent().getStringExtra("sDate");
+        msMonthYear = getIntent().getStringExtra("sMonthYear");
         mBreakfast = getIntent().getBooleanExtra("breakfast", false);
         mLunch = getIntent().getBooleanExtra("lunch", false);
         mDinner = getIntent().getBooleanExtra("dinner", false);
@@ -107,14 +109,16 @@ public class ChooseMessActivity extends OptionsMenuActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<String> registration_dates = new ArrayList<>();
-                if (msDate != null)
+                if (msDate != null) {
                     registration_dates.add(msDate);
+                }
                 else if (msDay != null) {
                     int nDayOfWeek = day_num_map.get(msDay);
                     Calendar current_date = Calendar.getInstance();
+                    current_date.set(Calendar.DAY_OF_MONTH, 1);
                     int current_month = current_date.get(Calendar.MONTH);
 
-                    Calendar next_date = Calendar.getInstance();
+                    Calendar next_date = (Calendar) current_date.clone();
                     next_date.add(Calendar.DAY_OF_MONTH, (nDayOfWeek + 7 - next_date.get(Calendar.DAY_OF_WEEK)));
 
                     int days_gap = (int) Duration.between(current_date.toInstant(), next_date.toInstant()).toDays();
@@ -122,7 +126,7 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                         next_date.add(Calendar.DAY_OF_MONTH, 7);
 
                     int updated_month = next_date.get(Calendar.MONTH);
-                    while (updated_month == current_month) {
+                    while (updated_month <= current_month) {
                         String sDayNum = String.valueOf(next_date.get(Calendar.DAY_OF_MONTH));
                         if (sDayNum.length() < 2)
                             sDayNum = "0" + sDayNum;
@@ -140,15 +144,18 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser mCurrentUser = mAuth.getCurrentUser();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference user_doc = db.collection("users").document(mCurrentUser.getEmail());
+                CollectionReference user_mess_registrations = db.collection("users")
+                                                                .document(mCurrentUser.getEmail())
+                                                                .collection("mess_registrations");
 
                 for (String date: registration_dates) {
                     Map<String, Object> meal_mess = new HashMap<>();
-                    for (Product product: productList) {
+                    for (Product product: productList)
                         if (product.getRegistered_mess() != null)
-                            meal_mess.put(product.getMeal(), product.getRegistered_mess());
-                    }
-                    user_doc.collection("mess_registrations")
+                            meal_mess.put(product.getMeal(), product.getRegistered_mess() + " (" + product.getMeal().charAt(0) + ")");
+
+                    user_mess_registrations.document(msMonthYear)
+                            .collection("registrations_by_date")
                             .document(date)
                             .set(meal_mess, SetOptions.merge())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
