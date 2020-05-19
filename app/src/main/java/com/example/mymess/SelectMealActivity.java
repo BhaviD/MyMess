@@ -16,10 +16,10 @@ public class SelectMealActivity extends OptionsMenuActivity {
     private Toolbar mtoolbar;
 
     Button food_options_btn;
-    Integer mnDay, mnMonth, mnYear;
-    String msDay;
-    CheckBox breakfastCheckbox, lunchCheckbox, dinnerCheckbox, allCheckbox;
-    boolean mBreakfastChecked = false, mLunchChecked = false, mDinnerChecked = false, mAllChecked = false;
+    String msDay = null;
+    String msDate = null;
+    CheckBox breakfast, lunch, dinner, all_meals;
+//    boolean mBreakfastChecked = false, mLunchChecked = false, mDinnerChecked = false, mAllChecked = false;
     TextView skip_food_options;
 
     @Override
@@ -31,22 +31,16 @@ public class SelectMealActivity extends OptionsMenuActivity {
         setSupportActionBar(mtoolbar);
 
         msDay = getIntent().getStringExtra("sDay");
-        mnYear = getIntent().getIntExtra("nYear", 0);
-        mnMonth = getIntent().getIntExtra("nMonth", 0);
-        mnDay = getIntent().getIntExtra("nDay", 0);
-        breakfastCheckbox = (CheckBox) findViewById(R.id.breakfast);
-        lunchCheckbox = (CheckBox) findViewById(R.id.lunch);
-        dinnerCheckbox = (CheckBox) findViewById(R.id.dinner);
-        allCheckbox = (CheckBox) findViewById(R.id.all_meals);
+        msDate = getIntent().getStringExtra("sDate");
+        breakfast = (CheckBox) findViewById(R.id.breakfast);
+        lunch = (CheckBox) findViewById(R.id.lunch);
+        dinner = (CheckBox) findViewById(R.id.dinner);
+        all_meals = (CheckBox) findViewById(R.id.all_meals);
 
         food_options_btn = (Button) findViewById(R.id.food_options);
         food_options_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBreakfastChecked = breakfastCheckbox.isChecked();
-                mLunchChecked = lunchCheckbox.isChecked();
-                mDinnerChecked = dinnerCheckbox.isChecked();
-                mAllChecked = allCheckbox.isChecked();
                 gotoActivity(ShowPreferences.class);
             }
         });
@@ -55,62 +49,44 @@ public class SelectMealActivity extends OptionsMenuActivity {
         skip_food_options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBreakfastChecked = breakfastCheckbox.isChecked();
-                mLunchChecked = lunchCheckbox.isChecked();
-                mDinnerChecked = dinnerCheckbox.isChecked();
-                mAllChecked = allCheckbox.isChecked();
                 gotoActivity(ChooseMessActivity.class);
             }
         });
     }
 
     public void mealClicked(View v) {
-        if (allCheckbox.isChecked()) {
-            if (!breakfastCheckbox.isChecked() || !lunchCheckbox.isChecked() || !dinnerCheckbox.isChecked())
-                allCheckbox.toggle();
-        } else {
-            if (breakfastCheckbox.isChecked() && lunchCheckbox.isChecked() && dinnerCheckbox.isChecked())
-                allCheckbox.toggle();
-        }
+        if (!breakfast.isChecked() || !lunch.isChecked() || !dinner.isChecked())
+            all_meals.setChecked(false);
+        else
+            all_meals.setChecked(true);
     }
 
     public void allMealsClicked (View v) {
-        if (allCheckbox.isChecked()) {
-            if (!breakfastCheckbox.isChecked())
-                breakfastCheckbox.toggle();
-            if (!lunchCheckbox.isChecked())
-                lunchCheckbox.toggle();
-            if (!dinnerCheckbox.isChecked())
-                dinnerCheckbox.toggle();
-        } else {
-            if (breakfastCheckbox.isChecked())
-                breakfastCheckbox.toggle();
-            if (lunchCheckbox.isChecked())
-                lunchCheckbox.toggle();
-            if (dinnerCheckbox.isChecked())
-                dinnerCheckbox.toggle();
-        }
+        boolean set_all_checked = false;
+        if (all_meals.isChecked())
+            set_all_checked = true;
+
+        breakfast.setChecked(set_all_checked);
+        lunch.setChecked(set_all_checked);
+        dinner.setChecked(set_all_checked);
     }
 
     private void gotoActivity(Class goto_class) {
-        if (!mBreakfastChecked && !mLunchChecked && !mDinnerChecked && !mAllChecked)
-            Toast.makeText(SelectMealActivity.this, "Please select a meal option", Toast.LENGTH_SHORT).show();
+        if (!breakfast.isChecked() && !lunch.isChecked() && !dinner.isChecked() && !all_meals.isChecked())
+            Toast.makeText(SelectMealActivity.this, "Please select a meal", Toast.LENGTH_SHORT).show();
         else {
             Intent intent = new Intent(SelectMealActivity.this, goto_class);
-            if (msDay != null) {
+            if (msDay != null)
                 intent.putExtra("sDay", msDay);
-            }
+            else if (msDate != null)
+                intent.putExtra("sDate", msDate);
+
+            if (all_meals.isChecked())
+                intent.putExtra("all_meals", all_meals.isChecked());
             else {
-                intent.putExtra("nYear", mnYear);
-                intent.putExtra("nMonth", mnMonth);
-                intent.putExtra("nDay", mnDay);
-            }
-            if (mAllChecked)
-                intent.putExtra("allChecked", mAllChecked);
-            else {
-                intent.putExtra("breakfastChecked", mBreakfastChecked);
-                intent.putExtra("lunchChecked", mLunchChecked);
-                intent.putExtra("dinnerChecked", mDinnerChecked);
+                intent.putExtra("breakfast", breakfast.isChecked());
+                intent.putExtra("lunch", lunch.isChecked());
+                intent.putExtra("dinner", dinner.isChecked());
             }
             startActivity(intent);
         }

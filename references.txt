@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/13198609/java-calendar-getting-difference-between-two-dates-times-off-by-one/43389145
+https://stackoverflow.com/questions/20921126/how-to-reset-multiple-spinner-values-to-default/20921198
+https://developer.android.com/reference/java/util/Calendar#before(java.lang.Object)
+https://docs.oracle.com/javase/6/docs/api/java/util/Date.html
+https://stackoverflow.com/questions/43853375/get-the-next-date-by-specifying-the-day-of-week
+https://stackoverflow.com/questions/10243557/how-to-apply-slide-animation-between-two-activities-in-android

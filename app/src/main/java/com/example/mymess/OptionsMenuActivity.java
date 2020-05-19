@@ -26,8 +26,13 @@ public class OptionsMenuActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                Intent intToMain = new Intent(this, MainActivity.class);
-                startActivity(intToMain);
+                Intent intentToMain = new Intent (this, MainActivity.class);
+                startActivity(intentToMain);
+                return true;
+
+            case R.id.change_mess_registration:
+                Intent intentToDayDate = new Intent(this, DayDateActivity.class);
+                startActivity(intentToDayDate);
                 return true;
 
             default:

@@ -38,6 +38,7 @@
                 android:textSize="50sp" />
 
             <RadioGroup
+                android:id="@+id/messes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/meal"
