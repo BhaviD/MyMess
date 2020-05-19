@@ -9,6 +9,7 @@
     <string name="kadamba_non_veg">Kadamba Non-Veg</string>
     <string name="home_text">Please click at the dots for options</string>
     <string name="change_mess_registration">Change Mess Registration</string>
+    <string name="view_mess_registration">View Mess Registration</string>
 
     <string-array name="days">
         <item>DAY</item>

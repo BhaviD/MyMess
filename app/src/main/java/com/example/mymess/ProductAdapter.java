@@ -85,12 +85,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     String registered_mess = checkedRadioButton.getText().toString();
 
                     for (Product product: productList) {
-                        if (product.getMeal() == meal.getText()) {
+                        if (product.getMeal() == meal.getText())
                             product.setRegistered_mess(registered_mess);
-                            Toast.makeText(ProductAdapter.this.mCtx,
-                                    product.getMeal() + " " + registered_mess,
-                                    Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
             });

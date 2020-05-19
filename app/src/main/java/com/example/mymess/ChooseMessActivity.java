@@ -154,8 +154,9 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(ChooseMessActivity.this, "Mess Registration", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(ChooseMessActivity.this, DayDateActivity.class);
+                                    Toast.makeText(ChooseMessActivity.this, "Mess Registration Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(ChooseMessActivity.this, WelcomeActivity.class);
+                                    startActivity(intent);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
