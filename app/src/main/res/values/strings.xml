@@ -21,6 +21,8 @@
     <string name="home">Home</string>
     <string name="view_mess_menus">View Mess Menus</string>
     <string name="mess">Mess</string>
+    <string name="choose_cancel_mess">Choose/Cancel Mess</string>
+    <string name="register_mess">Register Mess</string>
 
     <string-array name="days">
         <item>Choose Day</item>

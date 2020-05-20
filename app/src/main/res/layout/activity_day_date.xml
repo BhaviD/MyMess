@@ -10,26 +10,27 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_layout" />
 
+
     <Spinner
         android:id="@+id/days"
-        android:layout_width="352dp"
-        android:layout_height="43dp"
+        android:layout_width="225dp"
+        android:layout_height="47dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.704"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
         android:id="@+id/choose_dates"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="44dp"
         android:text="Choose Date(s)"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/days" />
-
 
     <CheckBox
         android:id="@+id/dinner"
@@ -47,7 +48,7 @@
         android:id="@+id/breakfast"
         android:layout_width="151dp"
         android:layout_height="49dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="52dp"
         android:onClick="mealClicked"
         android:text="Breakfast"
         android:textSize="20dp"
@@ -69,15 +70,15 @@
 
     <Button
         android:id="@+id/choose_mess"
-        android:layout_width="235dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:onClick="mealClicked"
-        android:text="Choose Mess"
+        android:text="@string/choose_cancel_mess"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_dates" />

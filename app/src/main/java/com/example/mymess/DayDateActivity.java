@@ -63,7 +63,9 @@ public class DayDateActivity extends OptionsMenuActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 msDay = days.getSelectedItem().toString();
-                if (!msDay.equals("Choose Day")) {
+                if (msDay.equals("Choose Day"))
+                    msDay = null;
+                else {
                     Calendar date = Calendar.getInstance();
                     SimpleDateFormat dateFormat = new SimpleDateFormat("MMM_y");
                     mDayDateTv.setText(msDay);
@@ -75,6 +77,7 @@ public class DayDateActivity extends OptionsMenuActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        // Dates Range Selection
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.add(Calendar.DAY_OF_MONTH, 2);
         long two_days_fwd = calendar.getTimeInMillis();
@@ -117,14 +120,17 @@ public class DayDateActivity extends OptionsMenuActivity {
 
                 msStartDate = start_date[0] + "_" + start_date[1];
                 msEndDate = end_date[0] + "_" + end_date[1];
+                String display_date_range;
                 if (start_date[0].length() < 3) {
                     msStartDate += "_" + current_year;
                     msEndDate += "_" + current_year;
+                    display_date_range = start_date[0] + " " + start_date[1] + "  -  " + end_date[0] + " " + end_date[1];
                 } else {
                     msStartDate += "_" + start_date[2];
                     msEndDate += "_" + end_date[2];
+                    display_date_range = start_date[0] + " " + start_date[1] + " " + start_date[2] + "  -  " + end_date[0] + " " + end_date[1] + " " + end_date[2];
                 }
-                mDayDateTv.setText(msStartDate + " - " + msEndDate);
+                mDayDateTv.setText(display_date_range);
                 msDay = null;
                 days.setEnabled(false);
             }
@@ -158,8 +164,8 @@ public class DayDateActivity extends OptionsMenuActivity {
 
     private void gotoActivity(Class goto_class) {
         if (msDay == null && msStartDate == null)
-            Toast.makeText(DayDateActivity.this, "Please choose a day or date(s)", Toast.LENGTH_SHORT).show();
-        if (!mBreakfast.isChecked() && !mLunch.isChecked() && !mDinner.isChecked() && !mAllMeals.isChecked())
+            Toast.makeText(DayDateActivity.this, "Please choose day or date(s)", Toast.LENGTH_SHORT).show();
+        else if (!mBreakfast.isChecked() && !mLunch.isChecked() && !mDinner.isChecked() && !mAllMeals.isChecked())
             Toast.makeText(DayDateActivity.this, "Please select a meal", Toast.LENGTH_SHORT).show();
         else {
             Intent intent = new Intent(DayDateActivity.this, goto_class);

@@ -88,7 +88,6 @@ public class ViewRegistrationActivity extends OptionsMenuActivity {
                                                    .document(sMonthYear)
                                                    .collection("registrations_by_date");
 
-        Toast.makeText(ViewRegistrationActivity.this, "Fetching mess registrations", Toast.LENGTH_SHORT).show();
         mess_registrations.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
