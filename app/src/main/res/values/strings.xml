@@ -20,6 +20,7 @@
     <string name="cancel">Cancel</string>
     <string name="home">Home</string>
     <string name="view_mess_menus">View Mess Menus</string>
+    <string name="mess">Mess</string>
 
     <string-array name="days">
         <item>DAY</item>

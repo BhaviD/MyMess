@@ -1,19 +1,16 @@
 package com.example.mymess;
 
 import android.content.Context;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseMessProductAdapter extends RecyclerView.Adapter<ChooseMessProductAdapter.ProductViewHolder> {
@@ -30,7 +27,7 @@ public class ChooseMessProductAdapter extends RecyclerView.Adapter<ChooseMessPro
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.custom_view, null);
+        View view = inflater.inflate(R.layout.choose_mess_custom_view, null);
         return new ProductViewHolder(view);
     }
 
@@ -50,9 +47,9 @@ public class ChooseMessProductAdapter extends RecyclerView.Adapter<ChooseMessPro
         TextView meal;
         RadioGroup messGroup;
 
-        public ProductViewHolder(@NonNull final View itemView) {
+        ProductViewHolder(@NonNull final View itemView) {
             super(itemView);
-            meal = itemView.findViewById(R.id.meal);
+            meal = itemView.findViewById(R.id.mess);
             messGroup = (RadioGroup) itemView.findViewById(R.id.messes);
 
             messGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
