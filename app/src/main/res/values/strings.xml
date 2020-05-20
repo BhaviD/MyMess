@@ -7,7 +7,7 @@
     <string name="yuktahaar">Yuktahaar</string>
     <string name="kadamba_veg">Kadamba Veg</string>
     <string name="kadamba_non_veg">Kadamba Non-Veg</string>
-    <string name="home_text">Please click at the dots for options</string>
+    <string name="home_text">Please click on the dots for menu options</string>
     <string name="change_mess_registration">Change Mess Registration</string>
     <string name="view_mess_registration">View Mess Registration</string>
     <string name="sun">Sun</string>
@@ -19,6 +19,7 @@
     <string name="sat">Sat</string>
     <string name="cancel">Cancel</string>
     <string name="home">Home</string>
+    <string name="view_mess_menus">View Mess Menus</string>
 
     <string-array name="days">
         <item>DAY</item>

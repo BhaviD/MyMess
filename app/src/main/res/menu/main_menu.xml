@@ -8,6 +8,10 @@
         android:title="@string/home"/>
 
     <item
+        android:id="@+id/view_mess_menus"
+        android:title="@string/view_mess_menus"/>
+
+    <item
         android:id="@+id/change_mess_registration"
         android:title="@string/change_mess_registration"/>
 

@@ -29,6 +29,11 @@ public class OptionsMenuActivity extends AppCompatActivity {
                 startActivity(intentToWelcome);
                 return true;
 
+            case R.id.view_mess_menus:
+                Intent intentToViewMessMenu = new Intent(this, MessMenuActivity.class);
+                startActivity(intentToViewMessMenu);
+                return true;
+
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 Intent intentToMain = new Intent (this, MainActivity.class);

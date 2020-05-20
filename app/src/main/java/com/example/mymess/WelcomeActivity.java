@@ -13,20 +13,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
 public class WelcomeActivity extends OptionsMenuActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +39,7 @@ public class WelcomeActivity extends OptionsMenuActivity {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mCurrentUser = mAuth.getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         final Calendar date = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMM y");
@@ -79,11 +75,11 @@ public class WelcomeActivity extends OptionsMenuActivity {
                     String l_mess = documentSnapshot.getString("Lunch");
                     String d_mess = documentSnapshot.getString("Dinner");
                     if (b_mess != null)
-                        breakfast_mess.setText(b_mess.substring(0, b_mess.length()-3));
+                        breakfast_mess.setText(b_mess.substring(0, b_mess.length()-4));
                     if (l_mess != null)
-                        lunch_mess.setText(l_mess.substring(0, l_mess.length()-3));
+                        lunch_mess.setText(l_mess.substring(0, l_mess.length()-4));
                     if (d_mess != null)
-                        dinner_mess.setText(d_mess.substring(0, d_mess.length()-3));
+                        dinner_mess.setText(d_mess.substring(0, d_mess.length()-4));
 
                     if (b_mess == null || l_mess == null || d_mess == null)
                         Toast.makeText(WelcomeActivity.this, "Mess Registrations are not done", Toast.LENGTH_LONG).show();
