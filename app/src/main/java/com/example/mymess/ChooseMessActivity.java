@@ -52,8 +52,8 @@ public class ChooseMessActivity extends OptionsMenuActivity {
     }};
 
     RecyclerView recyclerView;
-    ProductAdapter adapter;
-    List<Product> productList;
+    ChooseMessProductAdapter adapter;
+    List<ChooseMessProduct> productList;
 
     String msDay = null;
     String msDate = null;
@@ -87,20 +87,20 @@ public class ChooseMessActivity extends OptionsMenuActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (mAllMeals) {
-            productList.add(new Product(BREAKFAST, "Breakfast"));
-            productList.add(new Product(LUNCH, "Lunch"));
-            productList.add(new Product(DINNER, "Dinner"));
+            productList.add(new ChooseMessProduct(BREAKFAST, "Breakfast"));
+            productList.add(new ChooseMessProduct(LUNCH, "Lunch"));
+            productList.add(new ChooseMessProduct(DINNER, "Dinner"));
         }
         else {
             if (mBreakfast)
-                productList.add(new Product(BREAKFAST, "Breakfast"));
+                productList.add(new ChooseMessProduct(BREAKFAST, "Breakfast"));
             if (mLunch)
-                productList.add(new Product(LUNCH, "Lunch"));
+                productList.add(new ChooseMessProduct(LUNCH, "Lunch"));
             if (mDinner)
-                productList.add(new Product(DINNER, "Dinner"));
+                productList.add(new ChooseMessProduct(DINNER, "Dinner"));
         }
 
-        adapter = new ProductAdapter(this, productList);
+        adapter = new ChooseMessProductAdapter(this, productList);
         recyclerView.setAdapter(adapter);
 
         register_mess_btn = findViewById(R.id.register_mess);
@@ -150,7 +150,7 @@ public class ChooseMessActivity extends OptionsMenuActivity {
 
                 for (String date: registration_dates) {
                     Map<String, Object> meal_mess = new HashMap<>();
-                    for (Product product: productList)
+                    for (ChooseMessProduct product: productList)
                         if (product.getRegistered_mess() != null)
                             meal_mess.put(product.getMeal(), product.getRegistered_mess() + " (" + product.getMeal().charAt(0) + ")");
 

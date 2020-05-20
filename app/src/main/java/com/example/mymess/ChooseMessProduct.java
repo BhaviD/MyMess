@@ -1,12 +1,12 @@
 package com.example.mymess;
 
-public class Product {
+public class ChooseMessProduct {
 
     private int id;
     private String meal;
     private String registered_mess;
 
-    public Product(int id, String meal) {
+    public ChooseMessProduct(int id, String meal) {
         this.id = id;
         this.meal = meal;
         this.registered_mess = null;

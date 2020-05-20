@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ChooseMessProductAdapter extends RecyclerView.Adapter<ChooseMessProductAdapter.ProductViewHolder> {
 
     private Context mCtx;
-    private List<Product> productList;
+    private List<ChooseMessProduct> productList;
 
-    public ProductAdapter(Context mCtx, List<Product> productList) {
+    public ChooseMessProductAdapter(Context mCtx, List<ChooseMessProduct> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
     }
@@ -36,31 +36,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
+        ChooseMessProduct product = productList.get(position);
         holder.meal.setText(product.getMeal());
-//        RadioGroup messGroup = holder.messGroup;
-//        int id_offset = 0;
-//        switch (product.getMeal()) {
-//            case "Breakfast":
-//                id_offset = 100;
-//                break;
-//            case "Lunch":
-//                id_offset = 200;
-//                break;
-//            case "Dinner":
-//                id_offset = 300;
-//                break;
-//            default:
-//                break;
-//        }
-//        int count = holder.messGroup.getChildCount();
-//        ArrayList<RadioButton> radioButtons = new ArrayList<RadioButton>();
-//        for (int i = 0; i < count; i++) {
-//            View rb = messGroup.getChildAt(i);
-//            if (rb instanceof RadioButton) {
-//                rb.setId(id_offset + i);
-//            }
-//        }
     }
 
     @Override
@@ -86,7 +63,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     if (registered_mess.equals("Cancel"))
                         registered_mess = "Cancelled";
 
-                    for (Product product: productList) {
+                    for (ChooseMessProduct product: productList) {
                         if (product.getMeal() == meal.getText())
                             product.setRegistered_mess(registered_mess);
                     }
