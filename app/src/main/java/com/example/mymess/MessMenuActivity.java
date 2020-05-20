@@ -31,10 +31,10 @@ public class MessMenuActivity extends OptionsMenuActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         productList.add(new MessMenuProduct("South", R.drawable.south_mess_menu));
-        productList.add(new MessMenuProduct("North", R.drawable.south_mess_menu));
-        productList.add(new MessMenuProduct("Yuktahaar", R.drawable.south_mess_menu));
-        productList.add(new MessMenuProduct("Kadamba Veg", R.drawable.south_mess_menu));
-        productList.add(new MessMenuProduct("Kadamba Non-Veg", R.drawable.south_mess_menu));
+        productList.add(new MessMenuProduct("North", R.drawable.north_mess_menu));
+        productList.add(new MessMenuProduct("Yuktahaar", R.drawable.yuktahaar_mess_menu));
+        productList.add(new MessMenuProduct("Kadamba Veg", R.drawable.kadamba_veg_mess_menu));
+        productList.add(new MessMenuProduct("Kadamba Non-Veg", R.drawable.kadamba_non_veg_mess_menu));
 
         adapter = new MessMenuProductAdapter(this, productList);
         recyclerView.setAdapter(adapter);

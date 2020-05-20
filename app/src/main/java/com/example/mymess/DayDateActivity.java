@@ -1,38 +1,38 @@
 package com.example.mymess;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.Calendar;
-import java.util.Date;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
-import static java.time.Duration.between;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class DayDateActivity extends OptionsMenuActivity {
     private Toolbar mtoolbar;
 
-    Button mSelect_meal_btn;
     String msDay = null;
-    String msDate = null;
-    String msMonthYear = null;
-    CalendarView mCalenderView;
+    String msStartDate = null, msEndDate = null;
+    CheckBox mBreakfast, mLunch, mDinner, mAllMeals;
+
+    private Button mChooseDates;
+    private Button mChooseMess;
+    private TextView mDayDateTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,16 @@ public class DayDateActivity extends OptionsMenuActivity {
         mtoolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mtoolbar);
 
-        final Spinner days = (Spinner) findViewById(R.id.days);
-        mCalenderView = (CalendarView) findViewById(R.id.calendar);
+        mBreakfast = (CheckBox) findViewById(R.id.breakfast);
+        mLunch = (CheckBox) findViewById(R.id.lunch);
+        mDinner = (CheckBox) findViewById(R.id.dinner);
+        mAllMeals = (CheckBox) findViewById(R.id.all_meals);
+        mDayDateTv = findViewById(R.id.day_date_tv);
+        mChooseDates = findViewById(R.id.choose_dates);
+        mChooseMess = findViewById(R.id.choose_mess);
 
+        final Spinner days = (Spinner) findViewById(R.id.days);
+        final Calendar current_date = Calendar.getInstance();
 
         // Day Selection
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(DayDateActivity.this,
@@ -56,62 +63,121 @@ public class DayDateActivity extends OptionsMenuActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 msDay = days.getSelectedItem().toString();
-                if (!msDay.equals("DAY")) {
+                if (!msDay.equals("Choose Day")) {
                     Calendar date = Calendar.getInstance();
                     SimpleDateFormat dateFormat = new SimpleDateFormat("MMM_y");
-                    String sMonthYear = dateFormat.format(date.getTimeInMillis());
-
-                    Intent intent = new Intent(DayDateActivity.this, SelectMealActivity.class);
-                    intent.putExtra("sDay", msDay);
-                    intent.putExtra("sMonthYear", sMonthYear);
-                    startActivity(intent);
+                    mDayDateTv.setText(msDay);
+                    msStartDate = msEndDate = null;
+                    mChooseDates.setEnabled(false);
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Date Selection
-        mCalenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.add(Calendar.DAY_OF_MONTH, 2);
+        long two_days_fwd = calendar.getTimeInMillis();
+        calendar.add(Calendar.DAY_OF_MONTH, -2);
+
+        long this_month = calendar.getTimeInMillis();
+        calendar.add(Calendar.MONTH, 1);
+        long next_month = calendar.getTimeInMillis();
+
+        CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
+        constraintBuilder.setStart(this_month);
+        constraintBuilder.setEnd(next_month);
+        constraintBuilder.setValidator(DateValidatorPointForward.from(two_days_fwd));
+
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        builder.setTitleText("SELECT A DATE RANGE");
+        builder.setCalendarConstraints(constraintBuilder.build());
+        final MaterialDatePicker materialDatePicker = builder.build();
+
+        mChooseDates.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar selected_date = Calendar.getInstance();
-                selected_date.set(year, month, dayOfMonth);
-
-                Calendar current_date = Calendar.getInstance();
-                if (selected_date.before(current_date)) {
-                    Toast.makeText(DayDateActivity.this, "Past dates are invalid", Toast.LENGTH_LONG).show();
-                    msDate = null;
-                    days.setEnabled(true);
-                } else {
-                    int days_gap = (int) between(current_date.toInstant(), selected_date.toInstant()).toDays();
-                    if (days_gap <= 2) {
-                        Toast.makeText(DayDateActivity.this, "Minimum gap of 2 days is required", Toast.LENGTH_LONG).show();
-                        msDate = null;
-                        days.setEnabled(true);
-                    } else {
-                        days.setEnabled(false);
-                        Calendar date = Calendar.getInstance();
-                        date.set(year, month, dayOfMonth);
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM_y");
-                        String sMonthYear = dateFormat.format(date.getTimeInMillis());
-
-                        String sDayNum = String.valueOf(dayOfMonth);
-                        if (sDayNum.length() < 2)
-                            sDayNum = "0" + sDayNum;
-                        String sMonth = String.valueOf(month+1);  // months start from 0
-                        if (sMonth.length() < 2)
-                            sMonth = "0" + sMonth;
-                        msDate =  sDayNum + "_" + sMonth + "_" + year;
-
-                        Intent intent = new Intent(DayDateActivity.this, SelectMealActivity.class);
-                        intent.putExtra("sDate", msDate);
-                        intent.putExtra("sMonthYear", sMonthYear);
-                        startActivity(intent);
-                    }
-                }
+            public void onClick(View v) {
+                materialDatePicker.show(getSupportFragmentManager(), "DATE PICKER");
             }
         });
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                String date_range = materialDatePicker.getHeaderText();
+
+                String[] dates = date_range.split(" " + (char)8211 + " ");
+                String[] start_date = dates[0].split(" ");
+                String[] end_date = dates[1].split(" ");
+                if (start_date[0].length() == 1)
+                    start_date[0] = "0" + start_date[0];
+                if (end_date[0].length() == 1)
+                    end_date[0] = "0" + end_date[0];
+                String current_year = String.valueOf(current_date.get(Calendar.YEAR));
+
+                msStartDate = start_date[0] + "_" + start_date[1];
+                msEndDate = end_date[0] + "_" + end_date[1];
+                if (start_date[0].length() < 3) {
+                    msStartDate += "_" + current_year;
+                    msEndDate += "_" + current_year;
+                } else {
+                    msStartDate += "_" + start_date[2];
+                    msEndDate += "_" + end_date[2];
+                }
+                mDayDateTv.setText(msStartDate + " - " + msEndDate);
+                msDay = null;
+                days.setEnabled(false);
+            }
+        });
+
+        mChooseMess = findViewById(R.id.choose_mess);
+        mChooseMess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoActivity(ChooseMessActivity.class);
+            }
+        });
+    }
+
+    public void mealClicked(View v) {
+        if (!mBreakfast.isChecked() || !mLunch.isChecked() || !mDinner.isChecked())
+            mAllMeals.setChecked(false);
+        else
+            mAllMeals.setChecked(true);
+    }
+
+    public void allMealsClicked (View v) {
+        boolean set_all_checked = false;
+        if (mAllMeals.isChecked())
+            set_all_checked = true;
+
+        mBreakfast.setChecked(set_all_checked);
+        mLunch.setChecked(set_all_checked);
+        mDinner.setChecked(set_all_checked);
+    }
+
+    private void gotoActivity(Class goto_class) {
+        if (msDay == null && msStartDate == null)
+            Toast.makeText(DayDateActivity.this, "Please choose a day or date(s)", Toast.LENGTH_SHORT).show();
+        if (!mBreakfast.isChecked() && !mLunch.isChecked() && !mDinner.isChecked() && !mAllMeals.isChecked())
+            Toast.makeText(DayDateActivity.this, "Please select a meal", Toast.LENGTH_SHORT).show();
+        else {
+            Intent intent = new Intent(DayDateActivity.this, goto_class);
+            if (msDay != null)
+                intent.putExtra("sDay", msDay);
+            else if (msStartDate != null) {
+                intent.putExtra("sStartDate", msStartDate);
+                intent.putExtra("sEndDate", msEndDate);
+            }
+
+            if (mAllMeals.isChecked())
+                intent.putExtra("all_meals", mAllMeals.isChecked());
+            else {
+                intent.putExtra("breakfast", mBreakfast.isChecked());
+                intent.putExtra("lunch", mLunch.isChecked());
+                intent.putExtra("dinner", mDinner.isChecked());
+            }
+            startActivity(intent);
+        }
     }
 }

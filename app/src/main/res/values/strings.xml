@@ -23,7 +23,7 @@
     <string name="mess">Mess</string>
 
     <string-array name="days">
-        <item>DAY</item>
+        <item>Choose Day</item>
         <item>Monday</item>
         <item>Tuesday</item>
         <item>Wednesday</item>

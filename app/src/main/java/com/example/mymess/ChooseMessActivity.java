@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,13 +52,27 @@ public class ChooseMessActivity extends OptionsMenuActivity {
         put("Saturday", 7);
     }};
 
+    HashMap<String, Integer> month_num_map  = new HashMap<String, Integer>() {{
+        put("Jan", 0);
+        put("Feb", 1);
+        put("Mar", 2);
+        put("Apr", 3);
+        put("May", 4);
+        put("Jun", 5);
+        put("Jul", 6);
+        put("Aug", 7);
+        put("Sep", 8);
+        put("Oct", 9);
+        put("Nov", 10);
+        put("Dec", 11);
+    }};
+
     RecyclerView recyclerView;
     ChooseMessProductAdapter adapter;
     List<ChooseMessProduct> productList;
 
     String msDay = null;
-    String msDate = null;
-    String msMonthYear = null;
+    String msStartDate = null, msEndDate = null;
     boolean mBreakfast = false, mLunch = false, mDinner = false, mAllMeals = false;
 
     Button register_mess_btn;
@@ -73,8 +88,8 @@ public class ChooseMessActivity extends OptionsMenuActivity {
         setSupportActionBar(toolbar);
 
         msDay = getIntent().getStringExtra("sDay");
-        msDate = getIntent().getStringExtra("sDate");
-        msMonthYear = getIntent().getStringExtra("sMonthYear");
+        msStartDate = getIntent().getStringExtra("sStartDate");
+        msEndDate = getIntent().getStringExtra("sEndDate");
         mBreakfast = getIntent().getBooleanExtra("breakfast", false);
         mLunch = getIntent().getBooleanExtra("lunch", false);
         mDinner = getIntent().getBooleanExtra("dinner", false);
@@ -82,8 +97,7 @@ public class ChooseMessActivity extends OptionsMenuActivity {
 
         productList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true); // try removing it!
-
+        recyclerView.setHasFixedSize(true);     // try removing it!
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (mAllMeals) {
@@ -109,15 +123,27 @@ public class ChooseMessActivity extends OptionsMenuActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<String> registration_dates = new ArrayList<>();
-                if (msDate != null) {
-                    registration_dates.add(msDate);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_y");
+                String sTempDate;
+                if (msStartDate != null) {
+                    Calendar temp_date = Calendar.getInstance();
+                    Calendar end_date = Calendar.getInstance();
+                    temp_date.clear();
+                    end_date.clear();
+                    String[] sDate = msStartDate.split("_");
+                    String[] eDate = msEndDate.split("_");
+                    temp_date.set(Integer.valueOf(sDate[2]), month_num_map.get(sDate[1]),Integer.valueOf(sDate[0]));
+                    end_date.set(Integer.valueOf(eDate[2]), month_num_map.get(eDate[1]),Integer.valueOf(eDate[0]));
+
+                    while (temp_date.compareTo(end_date) <= 0) {
+                        sTempDate = dateFormat.format(temp_date.getTimeInMillis());
+                        registration_dates.add(sTempDate);
+                        temp_date.add(Calendar.DAY_OF_MONTH, 1);
+                    }
                 }
                 else if (msDay != null) {
                     int nDayOfWeek = day_num_map.get(msDay);
                     Calendar current_date = Calendar.getInstance();
-                    current_date.set(Calendar.DAY_OF_MONTH, 1);
-                    int current_month = current_date.get(Calendar.MONTH);
-
                     Calendar next_date = (Calendar) current_date.clone();
                     next_date.add(Calendar.DAY_OF_MONTH, (nDayOfWeek + 7 - next_date.get(Calendar.DAY_OF_WEEK)));
 
@@ -125,20 +151,11 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                     if (days_gap <= 2)
                         next_date.add(Calendar.DAY_OF_MONTH, 7);
 
-                    int updated_month = next_date.get(Calendar.MONTH);
-                    while (updated_month <= current_month) {
-                        String sDayNum = String.valueOf(next_date.get(Calendar.DAY_OF_MONTH));
-                        if (sDayNum.length() < 2)
-                            sDayNum = "0" + sDayNum;
-                        String sMonth = String.valueOf(next_date.get(Calendar.MONTH)+1);  // months start from 0
-                        if (sMonth.length() < 2)
-                            sMonth = "0" + sMonth;
-                        registration_dates.add(sDayNum + "_" + sMonth + "_" + next_date.get(Calendar.YEAR));
-
+                    while (current_date.get(Calendar.MONTH) == next_date.get(Calendar.MONTH)) {
+                        sTempDate = dateFormat.format(next_date.getTimeInMillis());
+                        registration_dates.add(sTempDate);
                         next_date.add(Calendar.DAY_OF_MONTH, 7);
-                        updated_month = next_date.get(Calendar.MONTH);
                     }
-//                    Toast.makeText(ChooseMessActivity.this, "Dates: " + dates_added, Toast.LENGTH_SHORT).show();
                 }
 
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -148,15 +165,17 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                                                                 .document(mCurrentUser.getEmail())
                                                                 .collection("mess_registrations");
 
+                String month_year = "";
                 for (String date: registration_dates) {
                     Map<String, Object> meal_mess = new HashMap<>();
                     for (ChooseMessProduct product: productList)
                         if (product.getRegistered_mess() != null)
                             meal_mess.put(product.getMeal(), product.getRegistered_mess() + " (" + product.getMeal().charAt(0) + ")");
 
-                    user_mess_registrations.document(msMonthYear)
+                    month_year = date.substring(3);
+                    user_mess_registrations.document(month_year)
                             .collection("registrations_by_date")
-                            .document(date)
+                            .document(date.substring(0, 2))
                             .set(meal_mess, SetOptions.merge())
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

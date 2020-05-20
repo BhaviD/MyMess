@@ -108,11 +108,11 @@ public class ViewRegistrationActivity extends OptionsMenuActivity {
 
                     int r = 1, c = temp_date.get(Calendar.DAY_OF_WEEK);
                     for (QueryDocumentSnapshot document: task.getResult()) {
-                        Map<String, Object> mess = document.getData();
+                        Map<String, Object> messes = document.getData();
                         String display_text = String.valueOf(temp_date.get(Calendar.DAY_OF_MONTH));
-                        display_text += "\n\n" + (String) mess.get("Breakfast");
-                        display_text += "\n\n" + (String) mess.get("Lunch");
-                        display_text += "\n\n" + (String) mess.get("Dinner");
+                        display_text += "\n\n" + (String) messes.get("Breakfast");
+                        display_text += "\n\n" + (String) messes.get("Lunch");
+                        display_text += "\n\n" + (String) messes.get("Dinner");
                         display_text += "\n";
 
                         display_tv_id = getResources().getIdentifier("_" + r + c, "id", getPackageName());

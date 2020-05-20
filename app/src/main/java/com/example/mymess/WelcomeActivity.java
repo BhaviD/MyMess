@@ -56,7 +56,7 @@ public class WelcomeActivity extends OptionsMenuActivity {
         dateFormat = new SimpleDateFormat("MMM_y");
         String sMonthYear = dateFormat.format(date.getTimeInMillis());
 
-        dateFormat = new SimpleDateFormat("dd_MM_yyyy");
+        dateFormat = new SimpleDateFormat("dd");
         String fetch_date = dateFormat.format(date.getTimeInMillis());
 
         DocumentReference mess_registration = db.collection("users")

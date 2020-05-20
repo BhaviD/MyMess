@@ -1,11 +1,9 @@
 package com.example.mymess;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,13 +13,13 @@ import android.widget.Toast;
 public class SelectMealActivity extends OptionsMenuActivity {
     private Toolbar mtoolbar;
 
-    Button food_options_btn;
+//    Button food_options_btn;
     String msDay = null;
-    String msDate = null;
+    String msStartDate = null, msEndDate = null;
     String msMonthYear = null;
     CheckBox breakfast, lunch, dinner, all_meals;
-//    boolean mBreakfastChecked = false, mLunchChecked = false, mDinnerChecked = false, mAllChecked = false;
-    TextView skip_food_options;
+    Button choose_mess;
+//    TextView skip_food_options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +30,16 @@ public class SelectMealActivity extends OptionsMenuActivity {
         setSupportActionBar(mtoolbar);
 
         msDay = getIntent().getStringExtra("sDay");
-        msDate = getIntent().getStringExtra("sDate");
         msMonthYear = getIntent().getStringExtra("sMonthYear");
+        msStartDate = getIntent().getStringExtra("sStartDate");
+        msEndDate = getIntent().getStringExtra("sEndDate");
         breakfast = (CheckBox) findViewById(R.id.breakfast);
         lunch = (CheckBox) findViewById(R.id.lunch);
         dinner = (CheckBox) findViewById(R.id.dinner);
         all_meals = (CheckBox) findViewById(R.id.all_meals);
 
-        food_options_btn = (Button) findViewById(R.id.food_options);
-        food_options_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoActivity(ShowPreferences.class);
-            }
-        });
-
-        skip_food_options = findViewById(R.id.skip_food_options);
-        skip_food_options.setOnClickListener(new View.OnClickListener() {
+        choose_mess = findViewById(R.id.choose_mess);
+        choose_mess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoActivity(ChooseMessActivity.class);
@@ -81,8 +72,10 @@ public class SelectMealActivity extends OptionsMenuActivity {
             intent.putExtra("sMonthYear", msMonthYear);
             if (msDay != null)
                 intent.putExtra("sDay", msDay);
-            else if (msDate != null)
-                intent.putExtra("sDate", msDate);
+            else if (msStartDate != null) {
+                intent.putExtra("sStartDate", msStartDate);
+                intent.putExtra("sEndDate", msEndDate);
+            }
 
             if (all_meals.isChecked())
                 intent.putExtra("all_meals", all_meals.isChecked());
