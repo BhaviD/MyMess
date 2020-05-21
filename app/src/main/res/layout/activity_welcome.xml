@@ -54,17 +54,18 @@
     <TextView
         android:id="@+id/introduction"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_below="@+id/full_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="56dp"
+        android:layout_marginTop="32dp"
         android:text="@string/home_text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dinner_mess"
-        app:layout_constraintVertical_bias="0.578" />
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/current_date"
