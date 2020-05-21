@@ -23,6 +23,16 @@
     <string name="mess">Mess</string>
     <string name="choose_cancel_mess">Choose/Cancel Mess</string>
     <string name="register_mess">Register Mess</string>
+    <string name="about">About</string>
+    <string name="about_text">MyMess app helps students of International Institute of Information Technology, Hyderabad
+                            to do all mess related activities like viewing mess menus, changing/cancelling mess registrations, viewing mess registrations etc.
+    </string>
+    <string name="disclaimer_text">This app is NOT an official app by International Institute Of Information Technology, Hyderabad. It is a prototype and doesn\'t connect to work on IIIT-H server or mess database.
+        Developer take no responsibility of the data shown and fetched from different services.
+    </string>
+    <string name="developers_name">Bhavi Dhingra</string>
+    <string name="github_link_text">github.com/BhaviD/MyMess</string>
+
 
     <string-array name="days">
         <item>Choose Day</item>

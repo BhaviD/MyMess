@@ -34,12 +34,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
                 startActivity(intentToViewMessMenu);
                 return true;
 
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                Intent intentToMain = new Intent (this, MainActivity.class);
-                startActivity(intentToMain);
-                return true;
-
             case R.id.change_mess_registration:
                 Intent intentToDayDate = new Intent(this, DayDateActivity.class);
                 startActivity(intentToDayDate);
@@ -48,6 +42,17 @@ public class OptionsMenuActivity extends AppCompatActivity {
             case R.id.view_mess_registrations:
                 Intent intentToViewRegistration = new Intent(this, ViewRegistrationActivity.class);
                 startActivity(intentToViewRegistration);
+                return true;
+
+            case R.id.about:
+                Intent intentToAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentToAbout);
+                return true;
+
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent intentToMain = new Intent (this, MainActivity.class);
+                startActivity(intentToMain);
                 return true;
 
             default:

@@ -20,6 +20,10 @@
         android:title="@string/view_mess_registration"/>
 
     <item
+        android:id="@+id/about"
+        android:title="@string/about" />
+
+    <item
         android:id="@+id/logout"
         android:title="Logout" />
 
