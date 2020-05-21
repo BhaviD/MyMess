@@ -49,7 +49,7 @@ public class ChooseMessProductAdapter extends RecyclerView.Adapter<ChooseMessPro
 
         ProductViewHolder(@NonNull final View itemView) {
             super(itemView);
-            meal = itemView.findViewById(R.id.mess);
+            meal = itemView.findViewById(R.id.meal);
             messGroup = (RadioGroup) itemView.findViewById(R.id.messes);
 
             messGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

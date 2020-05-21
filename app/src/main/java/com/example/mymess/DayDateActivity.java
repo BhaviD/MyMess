@@ -109,7 +109,7 @@ public class DayDateActivity extends OptionsMenuActivity {
             public void onPositiveButtonClick(Object selection) {
                 String date_range = materialDatePicker.getHeaderText();
 
-                String[] dates = date_range.split(" " + (char)8211 + " ");
+                String[] dates = date_range.split(" " + (char)8211 + " ");      // On Emulator: MMM d,  On Phone: d MMM
                 String[] start_date = dates[0].split(" ");
                 String[] end_date = dates[1].split(" ");
                 if (start_date[0].length() == 1)
@@ -118,17 +118,17 @@ public class DayDateActivity extends OptionsMenuActivity {
                     end_date[0] = "0" + end_date[0];
                 String current_year = String.valueOf(current_date.get(Calendar.YEAR));
 
-                msStartDate = start_date[0] + "_" + start_date[1];
-                msEndDate = end_date[0] + "_" + end_date[1];
+                msStartDate = start_date[1] + "_" + start_date[0];
+                msEndDate = end_date[1] + "_" + end_date[0];
                 String display_date_range;
-                if (start_date[0].length() < 3) {
+                if (start_date.length < 3) {
                     msStartDate += "_" + current_year;
                     msEndDate += "_" + current_year;
-                    display_date_range = start_date[0] + " " + start_date[1] + "  -  " + end_date[0] + " " + end_date[1];
+                    display_date_range = start_date[1] + " " + start_date[0] + "  -  " + end_date[1] + " " + end_date[0];
                 } else {
                     msStartDate += "_" + start_date[2];
                     msEndDate += "_" + end_date[2];
-                    display_date_range = start_date[0] + " " + start_date[1] + " " + start_date[2] + "  -  " + end_date[0] + " " + end_date[1] + " " + end_date[2];
+                    display_date_range = start_date[1] + " " + start_date[0] + " " + start_date[2] + "  -  " + end_date[1] + " " + end_date[0] + " " + end_date[2];
                 }
                 mDayDateTv.setText(display_date_range);
                 msDay = null;

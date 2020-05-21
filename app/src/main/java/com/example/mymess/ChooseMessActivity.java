@@ -126,6 +126,7 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MMM_y");
                 String sTempDate;
                 if (msStartDate != null) {
+//                    Toast.makeText(ChooseMessActivity.this, "msStartDate is not null", Toast.LENGTH_SHORT).show();
                     Calendar temp_date = Calendar.getInstance();
                     Calendar end_date = Calendar.getInstance();
                     temp_date.clear();
@@ -147,8 +148,9 @@ public class ChooseMessActivity extends OptionsMenuActivity {
                     Calendar next_date = (Calendar) current_date.clone();
                     next_date.add(Calendar.DAY_OF_MONTH, (nDayOfWeek + 7 - next_date.get(Calendar.DAY_OF_WEEK)));
 
-                    int days_gap = (int) Duration.between(current_date.toInstant(), next_date.toInstant()).toDays();
-                    if (days_gap <= 2)
+                    Calendar after_two_days = (Calendar) current_date.clone();
+                    after_two_days.add(Calendar.DAY_OF_MONTH, 2);
+                    if (next_date.compareTo(after_two_days) <= 0)
                         next_date.add(Calendar.DAY_OF_MONTH, 7);
 
                     while (current_date.get(Calendar.MONTH) == next_date.get(Calendar.MONTH)) {

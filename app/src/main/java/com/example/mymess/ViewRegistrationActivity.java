@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -108,15 +110,20 @@ public class ViewRegistrationActivity extends OptionsMenuActivity {
                     int r = 1, c = temp_date.get(Calendar.DAY_OF_WEEK);
                     for (QueryDocumentSnapshot document: task.getResult()) {
                         Map<String, Object> messes = document.getData();
+                        String b_mess = (String) messes.get("Breakfast");
+                        String l_mess = (String) messes.get("Lunch");
+                        String d_mess = (String) messes.get("Dinner");
                         String display_text = String.valueOf(temp_date.get(Calendar.DAY_OF_MONTH));
-                        display_text += "\n\n" + (String) messes.get("Breakfast");
-                        display_text += "\n\n" + (String) messes.get("Lunch");
-                        display_text += "\n\n" + (String) messes.get("Dinner");
-                        display_text += "\n";
+
+                        display_text += "<br><br>" + (b_mess.charAt(0) == 'C' ? "<font color=red>" + b_mess + "</font>" : b_mess);
+                        display_text += "<br><br>" + (l_mess.charAt(0) == 'C' ? "<font color=red>" + l_mess + "</font>" : l_mess);
+                        display_text += "<br><br>" + (d_mess.charAt(0) == 'C' ? "<font color=red>" + d_mess + "</font>" : d_mess);
+                        display_text += "<br>";
 
                         display_tv_id = getResources().getIdentifier("_" + r + c, "id", getPackageName());
                         display_tv = findViewById(display_tv_id);
-                        display_tv.setText(display_text);
+                        display_tv.setText(Html.fromHtml(display_text));
+                        display_tv.setTextSize(11);
 
                         int tv_border_id = getResources().getIdentifier("textview_border", "drawable", getPackageName());
                         Drawable tv_border = getResources().getDrawable(tv_border_id);

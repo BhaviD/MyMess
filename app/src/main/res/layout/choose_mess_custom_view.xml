@@ -17,7 +17,7 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/mess"
+                android:id="@+id/meal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -41,7 +41,7 @@
                 android:id="@+id/messes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mess"
+                android:layout_below="@+id/meal"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentEnd="true"
