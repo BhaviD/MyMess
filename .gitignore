@@ -13,3 +13,4 @@ captures
 app/.classpath
 app/.project
 app/.settings/
+app/google-services.json
